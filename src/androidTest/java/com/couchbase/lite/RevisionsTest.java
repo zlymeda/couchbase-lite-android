@@ -1,5 +1,6 @@
 package com.couchbase.lite;
 
+import com.couchbase.DatabaseUtil;
 import com.couchbase.lite.internal.RevisionInternal;
 import com.couchbase.lite.util.Log;
 

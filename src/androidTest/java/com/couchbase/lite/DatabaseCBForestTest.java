@@ -1,18 +1,61 @@
 package com.couchbase.lite;
 
 import com.couchbase.lite.util.Log;
+import com.couchbase.test.lite.LiteTestCaseBase;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
 
 /**
  * Created by hideki on 11/21/14.
  */
-public class DatabaseCBForestTest  extends LiteTestCase{
+public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
+    public static final String TAG = "DatabaseCBForestTest";
+    protected String DEFAULT_TEST_DB = "cblite-test";
+    protected String dbFilePath = null;
+    protected Context context = new LiteTestContext();
 
+    @Override
+    protected void setUp() throws Exception {
+        Log.v(TAG, "setUp");
+        super.setUp();
+
+        // database file path
+        dbFilePath = getDBFilePath(DEFAULT_TEST_DB);
+
+        // delete file
+        File file = new File(dbFilePath);
+        if(file.exists())
+            file.delete();
+
+
+    }
+
+    private String getDBFilePath(String name){
+        name = name.replace('/', ':');
+        return context.getFilesDir() + File.separator + name + Manager.DATABASE_SUFFIX;
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        Log.v(TAG, "tearDown");
+        super.tearDown();
+    }
+
+    public void testDummy() throws Exception{
+        Database db = new DatabaseCBForest(dbFilePath, null);
+        assertNotNull(db);
+        assertNull(db.getManager());
+        assertEquals(db.getName(), DEFAULT_TEST_DB);
+        assertEquals(db.getPath(), dbFilePath);
+        assertTrue(db.open());
+
+        Document document = db.createDocument();
+        assertNotNull(document);
+
+        db.delete();
+        assertTrue(db.close());
+    }
+/*
     // From CBL Android Tutorial
     public void testSimple() throws Exception {
         Log.i(TAG, "DatabaseCBForestTest.testSimple() - START");
@@ -56,5 +99,5 @@ public class DatabaseCBForestTest  extends LiteTestCase{
 
         Log.i(TAG, "DatabaseCBForestTest.testSimple() - END");
     }
-
+    */
 }
