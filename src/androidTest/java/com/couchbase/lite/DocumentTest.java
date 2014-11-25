@@ -1,7 +1,6 @@
 package com.couchbase.lite;
 
 import com.couchbase.lite.internal.RevisionInternal;
-import com.couchbase.lite.util.Log;
 
 import junit.framework.Assert;
 
@@ -114,8 +113,7 @@ public class DocumentTest extends LiteTestCase {
         RevisionInternal revisionInternal = new RevisionInternal(
                 document.getId(),
                 document.getCurrentRevisionId(),
-                deleted,
-                database
+                deleted
         );
         EnumSet<Database.TDContentOptions> contentOptions = EnumSet.of(
                 Database.TDContentOptions.TDIncludeAttachments,

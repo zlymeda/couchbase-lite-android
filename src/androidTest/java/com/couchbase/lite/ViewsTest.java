@@ -133,7 +133,7 @@ public class ViewsTest extends LiteTestCase {
     }
 
     private RevisionInternal putDoc(Database db, Map<String,Object> props) throws CouchbaseLiteException {
-        RevisionInternal rev = new RevisionInternal(props, db);
+        RevisionInternal rev = new RevisionInternal(props);
         Status status = new Status();
         rev = db.putRevision(rev, null, false, status);
         Assert.assertTrue(status.isSuccessful());
@@ -292,7 +292,7 @@ public class ViewsTest extends LiteTestCase {
         view.updateIndex();
 
         // Now add a doc and update a doc:
-        RevisionInternal threeUpdated = new RevisionInternal(rev3.getDocId(), rev3.getRevId(), false, database);
+        RevisionInternal threeUpdated = new RevisionInternal(rev3.getDocId(), rev3.getRevId(), false);
         numTimesMapFunctionInvoked = mapBlock.getNumTimesInvoked();
 
         Map<String,Object> newdict3 = new HashMap<String,Object>();
@@ -313,7 +313,7 @@ public class ViewsTest extends LiteTestCase {
         dict4.put("key", "four");
         RevisionInternal rev4 = putDoc(database, dict4);
 
-        RevisionInternal twoDeleted = new RevisionInternal(rev2.getDocId(), rev2.getRevId(), true, database);
+        RevisionInternal twoDeleted = new RevisionInternal(rev2.getDocId(), rev2.getRevId(), true);
         database.putRevision(twoDeleted, rev2.getRevId(), false, status);
         Assert.assertTrue(status.isSuccessful());
 
@@ -370,10 +370,10 @@ public class ViewsTest extends LiteTestCase {
 
         designDoc.put("_rev", rev1.getRevId());
         designDoc.put("key", "value2a");
-        RevisionInternal rev2a = new RevisionInternal(designDoc, database);
+        RevisionInternal rev2a = new RevisionInternal(designDoc);
         database.putRevision(rev2a, rev1.getRevId(), true);
         designDoc.put("key", "value2b");
-        RevisionInternal rev2b = new RevisionInternal(designDoc, database);
+        RevisionInternal rev2b = new RevisionInternal(designDoc);
         database.putRevision(rev2b, rev1.getRevId(), true);
 
         view.updateIndex();

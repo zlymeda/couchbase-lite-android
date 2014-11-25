@@ -1,5 +1,6 @@
 package com.couchbase.lite;
 
+import com.couchbase.lite.internal.Body;
 import com.couchbase.lite.internal.RevisionInternal;
 import com.couchbase.lite.mockserver.MockDispatcher;
 import com.couchbase.lite.mockserver.MockDocumentGet;
@@ -7,15 +8,13 @@ import com.couchbase.lite.mockserver.MockHelper;
 import com.couchbase.lite.mockserver.MockPreloadedPullTarget;
 import com.couchbase.lite.replicator.CustomizableMockHttpClient;
 import com.couchbase.lite.replicator.Replication;
-import com.couchbase.lite.replicator.ReplicationState;
-import com.couchbase.lite.support.HttpClientFactory;
-import com.couchbase.test.lite.*;
-
-import com.couchbase.lite.internal.Body;
-import com.couchbase.lite.router.*;
 import com.couchbase.lite.router.Router;
+import com.couchbase.lite.router.URLConnection;
+import com.couchbase.lite.router.URLStreamHandlerFactory;
 import com.couchbase.lite.storage.Cursor;
+import com.couchbase.lite.support.HttpClientFactory;
 import com.couchbase.lite.util.Log;
+import com.couchbase.test.lite.LiteTestCaseBase;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
@@ -454,7 +453,7 @@ public class LiteTestCase extends LiteTestCaseBase {
         doc1Properties.put("bar", false);
 
         Body body = new Body(doc1Properties);
-        RevisionInternal rev1 = new RevisionInternal(body, database);
+        RevisionInternal rev1 = new RevisionInternal(body);
 
         Status status = new Status();
         rev1 = database.putRevision(rev1, null, false, status);
@@ -464,7 +463,7 @@ public class LiteTestCase extends LiteTestCaseBase {
         doc1Properties.put("UPDATED", true);
 
         @SuppressWarnings("unused")
-        RevisionInternal rev2 = database.putRevision(new RevisionInternal(doc1Properties, database), rev1.getRevId(), false, status);
+        RevisionInternal rev2 = database.putRevision(new RevisionInternal(doc1Properties), rev1.getRevId(), false, status);
         assertEquals(Status.CREATED, status.getCode());
 
         Map<String, Object> doc2Properties = new HashMap<String, Object>();
@@ -473,7 +472,7 @@ public class LiteTestCase extends LiteTestCaseBase {
         doc2Properties.put("baz", 666);
         doc2Properties.put("fnord", true);
 
-        database.putRevision(new RevisionInternal(doc2Properties, database), null, false, status);
+        database.putRevision(new RevisionInternal(doc2Properties), null, false, status);
         assertEquals(Status.CREATED, status.getCode());
 
         Document doc2 = database.getDocument(doc2Id);
