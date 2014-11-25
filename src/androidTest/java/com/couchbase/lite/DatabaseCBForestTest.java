@@ -4,6 +4,11 @@ import com.couchbase.lite.util.Log;
 import com.couchbase.test.lite.LiteTestCaseBase;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by hideki on 11/21/14.
@@ -49,8 +54,28 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         assertEquals(db.getPath(), dbFilePath);
         assertTrue(db.open());
 
+        // get the current date and time
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = GregorianCalendar.getInstance();
+        String currentTimeString = dateFormatter.format(calendar.getTime());
+
+        // create an object that contains data for a document
+        Map<String, Object> docContent = new HashMap<String, Object>();
+        docContent.put("message", "Hello Couchbase Lite");
+        docContent.put("creationDate", currentTimeString);
+
+        // display the data for the new document
+        Log.i(TAG, "docContent=" + String.valueOf(docContent));
+
         Document document = db.createDocument();
         assertNotNull(document);
+
+        // write the document to the database
+        try {
+            document.putProperties(docContent);
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Cannot write document to database", e);
+        }
 
         db.delete();
         assertTrue(db.close());
