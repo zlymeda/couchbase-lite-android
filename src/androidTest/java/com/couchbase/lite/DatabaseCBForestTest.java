@@ -1,5 +1,6 @@
 package com.couchbase.lite;
 
+
 import com.couchbase.lite.util.Log;
 import com.couchbase.test.lite.LiteTestCaseBase;
 
@@ -28,9 +29,9 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         dbFilePath = getDBFilePath(DEFAULT_TEST_DB);
 
         // delete file
-        File file = new File(dbFilePath);
-        if(file.exists())
-            file.delete();
+        //File file = new File(dbFilePath);
+        //if(file.exists())
+        //    file.delete();
 
 
     }
@@ -42,17 +43,20 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
 
     @Override
     protected void tearDown() throws Exception {
-        Log.v(TAG, "tearDown");
+        Log.i(TAG, "tearDown");
         super.tearDown();
     }
 
     public void testDummy() throws Exception{
-        Database db = new DatabaseCBForest(dbFilePath, null);
-        assertNotNull(db);
-        assertNull(db.getManager());
-        assertEquals(db.getName(), DEFAULT_TEST_DB);
-        assertEquals(db.getPath(), dbFilePath);
-        assertTrue(db.open());
+
+        // Create database without Manager
+        Database database = new DatabaseCBForest(dbFilePath, null);
+        assertNotNull(database);
+        assertNull(database.getManager());
+        assertEquals(database.getName(), DEFAULT_TEST_DB);
+        assertEquals(database.getPath(), dbFilePath);
+        assertTrue(database.open());
+        Log.i(TAG, database.getPath());
 
         // get the current date and time
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -67,19 +71,36 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         // display the data for the new document
         Log.i(TAG, "docContent=" + String.valueOf(docContent));
 
-        Document document = db.createDocument();
+        // create an empty document
+        Document document = database.createDocument();
         assertNotNull(document);
 
         // write the document to the database
         try {
-            document.putProperties(docContent);
+        document.putProperties(docContent);
+        Log.i(TAG, "Document written to database named " + database.getName() + " with ID = " + document.getId());
         } catch (CouchbaseLiteException e) {
-            Log.e(TAG, "Cannot write document to database", e);
+        Log.e(TAG, "Cannot write document to database", e);
         }
 
-        db.delete();
-        assertTrue(db.close());
+        // save the ID of the new document
+        String docID = document.getId();
+        assertNotNull(docID);
+        assertNotSame("", docID);
+
+        // retrieve the document from the database
+        Document retrievedDocument = database.getDocument(docID);
+        assertNotNull(retrievedDocument);
+
+        // display the retrieved document
+        Log.i(TAG, "retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+
+        // delete database
+        //database.delete();
+        // close database
+        assertTrue(database.close());
     }
+
 /*
     // From CBL Android Tutorial
     public void testSimple() throws Exception {
