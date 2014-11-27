@@ -56,6 +56,8 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         assertTrue(database.open());
         Log.i(TAG, database.getPath());
 
+        Log.w(TAG, "Create a document");
+
         // get the current date and time
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = GregorianCalendar.getInstance();
@@ -86,12 +88,31 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         assertNotNull(docID);
         assertNotSame("", docID);
 
+        Log.w(TAG, "Retrieve a document");
+
+
         // retrieve the document from the database
         Document retrievedDocument = database.getDocument(docID);
         assertNotNull(retrievedDocument);
 
         // display the retrieved document
         Log.w(TAG, "retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+
+        Log.w(TAG, "Update a document");
+
+        // update the document
+        Map<String, Object> updatedProperties = new HashMap<String, Object>();
+        updatedProperties.putAll(retrievedDocument.getProperties());
+        updatedProperties.put ("message", "We're having a heat wave!");
+        updatedProperties.put ("temperature", "95");
+        try {
+            retrievedDocument.putProperties(updatedProperties);
+            Log.d(TAG, "updated retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+        } catch (CouchbaseLiteException e) {
+            Log.e (TAG, "Cannot update document", e);
+        }
+
+        Log.w(TAG, "Delete a document");
 
         // delete database
         database.delete();
