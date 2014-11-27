@@ -29,11 +29,9 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         dbFilePath = getDBFilePath(DEFAULT_TEST_DB);
 
         // delete file
-        //File file = new File(dbFilePath);
-        //if(file.exists())
-        //    file.delete();
-
-
+        File file = new File(dbFilePath);
+        if(file.exists())
+            file.delete();
     }
 
     private String getDBFilePath(String name){
@@ -47,7 +45,7 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         super.tearDown();
     }
 
-    public void testDummy() throws Exception{
+    public void testHelloWorld() throws Exception{
 
         // Create database without Manager
         Database database = new DatabaseCBForest(dbFilePath, null);
@@ -69,7 +67,7 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         docContent.put("creationDate", currentTimeString);
 
         // display the data for the new document
-        Log.i(TAG, "docContent=" + String.valueOf(docContent));
+        Log.w(TAG, "docContent=" + String.valueOf(docContent));
 
         // create an empty document
         Document document = database.createDocument();
@@ -77,10 +75,10 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
 
         // write the document to the database
         try {
-        document.putProperties(docContent);
-        Log.i(TAG, "Document written to database named " + database.getName() + " with ID = " + document.getId());
+            document.putProperties(docContent);
+            Log.w(TAG, "Document written to database named " + database.getName() + " with ID = " + document.getId());
         } catch (CouchbaseLiteException e) {
-        Log.e(TAG, "Cannot write document to database", e);
+            Log.e(TAG, "Cannot write document to database", e);
         }
 
         // save the ID of the new document
@@ -93,10 +91,10 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         assertNotNull(retrievedDocument);
 
         // display the retrieved document
-        Log.i(TAG, "retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+        Log.w(TAG, "retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
 
         // delete database
-        //database.delete();
+        database.delete();
         // close database
         assertTrue(database.close());
     }
