@@ -107,7 +107,7 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         updatedProperties.put ("temperature", "95");
         try {
             retrievedDocument.putProperties(updatedProperties);
-            Log.d(TAG, "updated retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+            Log.w(TAG, "updated retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
         } catch (CouchbaseLiteException e) {
             Log.e (TAG, "Cannot update document", e);
         }
