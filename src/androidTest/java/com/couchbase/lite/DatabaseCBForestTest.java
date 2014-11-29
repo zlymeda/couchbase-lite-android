@@ -69,7 +69,7 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         docContent.put("creationDate", currentTimeString);
 
         // display the data for the new document
-        Log.w(TAG, "docContent=" + String.valueOf(docContent));
+        Log.w(TAG, "new docContent=" + String.valueOf(docContent));
 
         // create an empty document
         Document document = database.createDocument();
@@ -105,6 +105,10 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
         updatedProperties.putAll(retrievedDocument.getProperties());
         updatedProperties.put ("message", "We're having a heat wave!");
         updatedProperties.put ("temperature", "95");
+
+        // display the data for the update document
+        Log.w(TAG, "update docContent=" + String.valueOf(updatedProperties));
+
         try {
             retrievedDocument.putProperties(updatedProperties);
             Log.w(TAG, "updated retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
