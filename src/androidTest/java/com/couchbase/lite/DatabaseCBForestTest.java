@@ -118,6 +118,14 @@ public class DatabaseCBForestTest  extends LiteTestCaseBase/*LiteTestCase*/{
 
         Log.w(TAG, "Delete a document");
 
+        // delete the document
+        try {
+            retrievedDocument.delete();
+            Log.w (TAG, "Deleted document, deletion status = " + retrievedDocument.isDeleted());
+        } catch (CouchbaseLiteException e) {
+            Log.e (TAG, "Cannot delete document", e);
+        }
+
         // delete database
         database.delete();
         // close database
