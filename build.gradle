@@ -52,16 +52,14 @@ android {
 def buildAndroidWithArtifacts = System.getProperty("buildAndroidWithArtifacts")
 
 dependencies {
-
     // this library is only needed by test code (95% certain), and therefore
     // instrumentTestCompile is used rather than compile.
     androidTestCompile 'commons-io:commons-io:2.0.1'
-
     compile buildAndroidWithArtifacts == null ?
             project(':libraries:couchbase-lite-java-core') :
             'com.couchbase.lite:couchbase-lite-java-core:' + System.getenv("MAVEN_UPLOAD_VERSION")
-
     androidTestCompile 'com.squareup.okhttp:mockwebserver:2.0.0'
+    androidTestCompile files('libraries/couchbase-lite-java-core/libs/cbforest.jar')
 
 }
 
