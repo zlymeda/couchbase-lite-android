@@ -30,6 +30,8 @@ public class LocalDocsTest extends LiteTestCase {
         assertEquals("_local/doc1", rev1.getDocId());
         assertTrue(rev1.getRevId().startsWith("1-"));
 
+        Log.w(TAG, "rev1.getDocId() => " + rev1.getDocId());
+
         //read it back
         RevisionInternal readRev = database.getLocalDocument(rev1.getDocId(), null);
         assertNotNull(readRev);
