@@ -12,51 +12,12 @@ import java.util.Map;
 /**
  * Created by hideki on 11/21/14.
  */
-public class DatabaseCBForestTest  extends /*LiteTestCaseBase*/LiteTestCase{
-    public static final String TAG = "DatabaseCBForestTest";
+public class HelloWorldTest extends LiteTestCase{
+    public static final String TAG = "HelloWorldTest";
 
-    /*
-    protected String DEFAULT_TEST_DB = "cblite-test";
-    protected String dbFilePath = null;
-    protected Context context = new LiteTestContext();
-
-    @Override
-    protected void setUp() throws Exception {
-        Log.v(TAG, "setUp");
-        super.setUp();
-
-        // database file path
-        dbFilePath = getDBFilePath(DEFAULT_TEST_DB);
-
-        // delete file
-        File file = new File(dbFilePath);
-        if(file.exists())
-            file.delete();
-    }
-
-    private String getDBFilePath(String name){
-        name = name.replace('/', ':');
-        return context.getFilesDir() + File.separator + name + Manager.DATABASE_SUFFIX;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        Log.i(TAG, "tearDown");
-        super.tearDown();
-    }
-*/
 
     public void testHelloWorld() throws Exception{
-/*
-        // Create database without Manager
-        Database database = new DatabaseCBForest(dbFilePath, null);
-        assertNotNull(database);
-        assertNull(database.getManager());
-        assertEquals(database.getName(), DEFAULT_TEST_DB);
-        assertEquals(database.getPath(), dbFilePath);
-        assertTrue(database.open());
-        Log.i(TAG, database.getPath());
-*/
+
         Log.w(TAG, "Create a document");
 
         // get the current date and time
@@ -126,11 +87,5 @@ public class DatabaseCBForestTest  extends /*LiteTestCaseBase*/LiteTestCase{
         } catch (CouchbaseLiteException e) {
             Log.e (TAG, "Cannot delete document", e);
         }
-/*
-        // delete database
-        database.delete();
-        // close database
-        assertTrue(database.close());
-*/
     }
 }
