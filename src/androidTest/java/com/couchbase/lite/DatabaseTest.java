@@ -17,6 +17,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DatabaseTest extends LiteTestCase {
 
+    /**
+     * NOTE: pruneRevsToMaxDepth() is not supported by CBForest version
+     */
+    /*
     public void testPruneRevsToMaxDepth() throws Exception {
 
         Map<String,Object> properties = new HashMap<String,Object>();
@@ -42,8 +46,8 @@ public class DatabaseTest extends LiteTestCase {
 
         numPruned = database.pruneRevsToMaxDepth(1);
         assertEquals(0, numPruned);
-
     }
+    */
 
     public void testPruneRevsToMaxDepthViaCompact() throws Exception {
 
