@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DatabaseTest extends LiteTestCase {
@@ -104,8 +103,6 @@ public class DatabaseTest extends LiteTestCase {
         assertTrue(success);
 
         assertEquals(1, atomicInteger.get());
-
-
     }
 
     /**
@@ -128,8 +125,6 @@ public class DatabaseTest extends LiteTestCase {
         createDocuments(database, numDocs);
 
         assertEquals(numDocs, atomicInteger.get());
-
-
     }
 
     /**
@@ -207,6 +202,10 @@ public class DatabaseTest extends LiteTestCase {
         assertNotNull(encoded);
     }
 
+    /**
+     * NOTE: winningRevIDOfDoc() and getDocNumericID() are not supported by CBForest version
+     */
+    /*
     public void testWinningRevIDOfDoc() throws Exception {
 
         Map<String, Object> properties = new HashMap<String, Object>();
@@ -251,6 +250,6 @@ public class DatabaseTest extends LiteTestCase {
         database.winningRevIDOfDoc(docNumericId, outIsDeleted, outIsConflict);
 
         assertTrue(outIsConflict.get());
-
     }
+    */
 }
