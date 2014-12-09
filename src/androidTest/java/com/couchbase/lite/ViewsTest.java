@@ -820,7 +820,7 @@ public class ViewsTest extends LiteTestCase {
                               @Override
                               public Object reduce(List<Object> keys, List<Object> values,
                                                    boolean rereduce) {
-                                  return View.totalValues(values);
+                                  return ViewUtil.totalValues(values);
                               }
                           }, "1"
         );
@@ -946,7 +946,7 @@ public class ViewsTest extends LiteTestCase {
                               @Override
                               public Object reduce(List<Object> keys, List<Object> values,
                                                    boolean rereduce) {
-                                  return View.totalValues(values);
+                                  return ViewUtil.totalValues(values);
                               }
                           }, "1"
         );
@@ -1239,7 +1239,7 @@ public class ViewsTest extends LiteTestCase {
                               @Override
                               public Object reduce(List<Object> keys, List<Object> values,
                                                    boolean rereduce) {
-                                  return View.totalValues(values);
+                                  return ViewUtil.totalValues(values);
                               }
                           }, "1"
         );
@@ -1530,7 +1530,7 @@ public class ViewsTest extends LiteTestCase {
                           }, new Reducer() {
                               @Override
                               public Object reduce(List<Object> keys, List<Object> values, boolean rereduce) {
-                                  return View.totalValues(values);
+                                  return ViewUtil.totalValues(values);
                               }
                           },
                 "1"
@@ -1546,7 +1546,7 @@ public class ViewsTest extends LiteTestCase {
                            }, new Reducer() {
                                @Override
                                public Object reduce(List<Object> keys, List<Object> values, boolean rereduce) {
-                                   return View.totalValues(values);
+                                   return ViewUtil.totalValues(values);
                                }
                            },
                 "1"

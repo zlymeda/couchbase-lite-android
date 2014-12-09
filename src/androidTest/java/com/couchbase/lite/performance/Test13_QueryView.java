@@ -28,6 +28,7 @@ import com.couchbase.lite.QueryRow;
 import com.couchbase.lite.Reducer;
 import com.couchbase.lite.TransactionalTask;
 import com.couchbase.lite.View;
+import com.couchbase.lite.ViewUtil;
 import com.couchbase.lite.util.Log;
 
 import java.util.HashMap;
@@ -62,7 +63,7 @@ public class Test13_QueryView extends LiteTestCase {
                 },
                 new Reducer() {
                     public Object reduce(List<Object> keys, List<Object> values, boolean rereduce) {
-                        return View.totalValues(values);
+                        return ViewUtil.totalValues(values);
                     }
                 },
                 "1.0.0"

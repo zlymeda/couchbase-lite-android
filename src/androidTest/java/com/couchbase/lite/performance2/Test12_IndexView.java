@@ -30,6 +30,7 @@ import com.couchbase.lite.Reducer;
 import com.couchbase.lite.Status;
 import com.couchbase.lite.TransactionalTask;
 import com.couchbase.lite.View;
+import com.couchbase.lite.ViewUtil;
 import com.couchbase.lite.internal.Body;
 import com.couchbase.lite.internal.RevisionInternal;
 import com.couchbase.lite.util.Log;
@@ -63,7 +64,7 @@ public class Test12_IndexView extends LitePerfTestCase {
                 },
                 new Reducer() {
                     public Object reduce(List<Object> keys, List<Object> values, boolean rereduce) {
-                        return View.totalValues(values);
+                        return ViewUtil.totalValues(values);
                     }
                 },
                 "1.0.0"
